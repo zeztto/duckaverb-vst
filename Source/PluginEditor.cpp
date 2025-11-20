@@ -40,7 +40,7 @@ DuckaverbAudioProcessorEditor::DuckaverbAudioProcessorEditor(
   bypassAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
       audioProcessor.apvts, "bypass", bypassButton);
 
-  setSize(420, 520);
+  setSize(380, 440);
 }
 
 DuckaverbAudioProcessorEditor::~DuckaverbAudioProcessorEditor() {}
@@ -60,44 +60,26 @@ void DuckaverbAudioProcessorEditor::paint(juce::Graphics &g) {
   g.drawRect(bounds, 3);
 
   // Top logo area
-  auto logoArea = bounds.removeFromTop(80);
-  logoArea.removeFromTop(10); // Top padding
+  auto logoArea = bounds.removeFromTop(70);
+  logoArea.removeFromTop(8); // Top padding
   g.setColour(juce::Colours::white);
-  g.setFont(juce::FontOptions(52.0f, juce::Font::bold));
+  g.setFont(juce::FontOptions(48.0f, juce::Font::bold));
   g.drawFittedText("DUCKAVERB", logoArea, juce::Justification::centred, 1);
 
   // Subtitle (Korean name)
-  g.setFont(juce::FontOptions(16.0f));
+  g.setFont(juce::FontOptions(14.0f));
   g.setColour(juce::Colour(0xff00bfff)); // Blue
-  g.drawFittedText("덕커버브", logoArea.removeFromBottom(20),
-                   juce::Justification::centred, 1);
-
-  // Description text
-  auto descArea = bounds.reduced(25);
-  descArea.removeFromTop(30);
-  auto descBox = descArea.removeFromTop(80);
-
-  g.setFont(juce::FontOptions(13.0f));
-  g.setColour(juce::Colour(0xffaaaaaa));
-  g.drawFittedText("One-Knob Ducking Reverb", descBox.removeFromTop(25),
-                   juce::Justification::centred, 1);
-
-  g.setFont(juce::FontOptions(11.0f));
-  g.setColour(juce::Colour(0xff888888));
-  g.drawFittedText("Clean sound when playing,", descBox.removeFromTop(18),
-                   juce::Justification::centred, 1);
-  g.drawFittedText("rich ambience when silent", descBox.removeFromTop(18),
+  g.drawFittedText("덕커버브", logoArea.removeFromBottom(16),
                    juce::Justification::centred, 1);
 
   // Draw knob module box (single large box)
-  auto knobBoxBounds = getLocalBounds().reduced(35);
-  knobBoxBounds.removeFromTop(80 + 30 + 80 + 35); // Skip to knob area
-
-  int boxHeight = 240;
+  auto knobBoxBounds = getLocalBounds().reduced(30);
+  knobBoxBounds.removeFromTop(85); // Skip logo area
+  knobBoxBounds.removeFromBottom(80); // Skip bypass area
 
   // Draw subtle box with rounded corners
   juce::Rectangle<float> box(knobBoxBounds.getX(), knobBoxBounds.getY(),
-                             knobBoxBounds.getWidth(), boxHeight);
+                             knobBoxBounds.getWidth(), knobBoxBounds.getHeight());
   g.setColour(juce::Colour(0x33ffffff)); // Semi-transparent white
   g.drawRoundedRectangle(box, 10.0f, 2.0f);
 
@@ -119,36 +101,34 @@ void DuckaverbAudioProcessorEditor::paint(juce::Graphics &g) {
   drawScrew(getWidth() - 18, getHeight() - 18);
 
   // h4ppy Labs footer
-  g.setFont(juce::FontOptions(11.0f));
+  g.setFont(juce::FontOptions(10.0f));
   g.setColour(juce::Colour(0xff666666));
-  auto footerArea = getLocalBounds().removeFromBottom(25);
+  auto footerArea = getLocalBounds().removeFromBottom(20);
   g.drawFittedText("h4ppy Labs", footerArea, juce::Justification::centred, 1);
 }
 
 void DuckaverbAudioProcessorEditor::resized() {
-  auto bounds = getLocalBounds().reduced(35);
+  auto bounds = getLocalBounds().reduced(30);
 
   // Top: Logo area
-  bounds.removeFromTop(80);
-  bounds.removeFromTop(30); // Space after logo
+  bounds.removeFromTop(70);
+  bounds.removeFromTop(15); // Space after logo
 
-  // Description area
-  bounds.removeFromTop(80);
-  bounds.removeFromTop(35); // Space before knob
+  // Reserve bottom for bypass button and footer
+  auto footerHeight = 80; // bypass button + footer
+  auto footer = bounds.removeFromBottom(footerHeight);
 
-  // SPACE knob module (large center control)
-  auto knobModuleArea = bounds.removeFromTop(240);
+  // SPACE knob module (takes remaining space)
+  auto knobModuleArea = bounds;
 
-  spaceLabel.setBounds(knobModuleArea.removeFromTop(32));
-  knobModuleArea.removeFromTop(5);
+  spaceLabel.setBounds(knobModuleArea.removeFromTop(30));
+  knobModuleArea.removeFromTop(8);
 
-  // Center the knob with generous padding
-  spaceSlider.setBounds(knobModuleArea.reduced(30, 10));
+  // Center the knob with padding
+  spaceSlider.setBounds(knobModuleArea.reduced(20, 5));
 
-  bounds.removeFromTop(35); // Space above bypass
-  bounds.removeFromBottom(25); // Reserve footer space
-
-  // Bypass footswitch (bottom center)
-  auto bypassArea = bounds.removeFromTop(60);
-  bypassButton.setBounds(bypassArea.withSizeKeepingCentre(180, 50));
+  // Bypass footswitch (at bottom, above footer)
+  footer.removeFromBottom(20); // Reserve for footer text
+  auto bypassArea = footer.removeFromTop(55);
+  bypassButton.setBounds(bypassArea.withSizeKeepingCentre(160, 48));
 }
