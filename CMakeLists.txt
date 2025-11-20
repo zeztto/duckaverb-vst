@@ -7,7 +7,7 @@ include(FetchContent)
 FetchContent_Declare(
     juce
     GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
-    GIT_TAG        master
+    GIT_TAG        7.0.12
 )
 FetchContent_MakeAvailable(juce)
 
