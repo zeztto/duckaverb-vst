@@ -2,11 +2,17 @@ cmake_minimum_required(VERSION 3.15)
 
 project(Duckaverb VERSION 0.0.1)
 
+# Set policy for URL download timestamps
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 # JUCE Setup using FetchContent
 include(FetchContent)
 FetchContent_Declare(
     juce
-    URL https://github.com/juce-framework/JUCE/archive/refs/tags/7.0.12.zip
+    URL https://github.com/juce-framework/JUCE/archive/refs/tags/8.0.4.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
 FetchContent_MakeAvailable(juce)
 
