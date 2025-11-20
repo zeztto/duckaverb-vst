@@ -29,7 +29,7 @@ jobs:
 
     - name: Upload Artifacts (macOS)
       if: runner.os == 'macOS'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-macOS
         path: |
@@ -39,7 +39,7 @@ jobs:
 
     - name: Upload Artifacts (Windows)
       if: runner.os == 'Windows'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-Windows
         path: |
