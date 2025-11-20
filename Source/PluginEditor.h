@@ -14,8 +14,12 @@ public:
 private:
   DuckaverbAudioProcessor &audioProcessor;
 
+  // Main control
   juce::Slider spaceSlider;
-  juce::ToggleButton bypassButton;
+  juce::Label spaceLabel;
+
+  // Bypass footswitch button (pedal style)
+  juce::TextButton bypassButton;
 
   using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
   using ButtonAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
