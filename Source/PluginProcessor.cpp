@@ -117,150 +117,86 @@ void DuckaverbAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
 
   auto spaceValue = apvts.getRawParameterValue("space")->load();
 
-  // 1. Update Reverb Parameters based on "Space"
+  // === DUCKING REVERB DSP ALGORITHM ===
+  // 1. Save dry signal
+  // 2. Process reverb (100% wet)
+  // 3. Duck reverb based on dry signal envelope
+  // 4. Mix dry + ducked wet with volume compensation
+
+  // Copy dry signal for sidechain detection and later mixing
+  juce::AudioBuffer<float> dryBuffer;
+  dryBuffer.makeCopyOf(buffer);
+
+  // Configure reverb parameters based on space (0.0 to 1.0)
   juce::Reverb::Parameters params;
-  params.roomSize = 0.3f + (spaceValue * 0.6f); // 0.3 to 0.9
-  params.damping = 0.5f - (spaceValue * 0.3f);  // 0.5 to 0.2
-  params.wetLevel = spaceValue * 0.8f;          // 0.0 to 0.8
-  params.dryLevel = 1.0f - (spaceValue * 0.2f); // 1.0 to 0.8
-  params.width = 0.5f + (spaceValue * 0.5f);    // 0.5 to 1.0
+  params.roomSize = 0.3f + (spaceValue * 0.6f);  // 0.3 to 0.9
+  params.damping = 0.5f - (spaceValue * 0.3f);   // 0.5 to 0.2 (less damping = more tail)
+  params.width = 0.5f + (spaceValue * 0.5f);     // 0.5 to 1.0 (stereo width)
+  params.wetLevel = 1.0f;  // 100% wet - we control mix manually
+  params.dryLevel = 0.0f;  // 0% dry - we mix it back ourselves
   params.freezeMode = 0.0f;
   reverb.setParameters(params);
 
-  // Ducking Parameters
-  float threshold =
-      0.5f - (spaceValue * 0.4f);           // Simple linear threshold mapping
-  float ratio = 2.0f + (spaceValue * 4.0f); // 2:1 to 6:1
-  float attack = 0.01f;
-  float release = 0.1f;
-
-  // Process
-  // We need to process stereo, but Envelope is usually mono sum or max
-  // JUCE Reverb processes stereo buffer in-place.
-
-  // Copy input for sidechain (Dry signal)
-  juce::AudioBuffer<float> sidechainBuffer;
-  sidechainBuffer.makeCopyOf(buffer);
-
-  // Apply Reverb (In-place on buffer)
-  // juce::Reverb takes stereo float**
+  // Process reverb (buffer now contains 100% wet signal)
   if (totalNumInputChannels == 2) {
-    float *left = buffer.getWritePointer(0);
-    float *right = buffer.getWritePointer(1);
-    reverb.processStereo(left, right, buffer.getNumSamples());
+    reverb.processStereo(buffer.getWritePointer(0),
+                         buffer.getWritePointer(1),
+                         buffer.getNumSamples());
   } else if (totalNumInputChannels == 1) {
-    float *mono = buffer.getWritePointer(0);
-    reverb.processMono(mono, buffer.getNumSamples());
+    reverb.processMono(buffer.getWritePointer(0), buffer.getNumSamples());
   }
 
-  // Apply Ducking (Compressor on Wet signal, triggered by Sidechain)
+  // Ducking parameters
+  float threshold = 0.02f + (spaceValue * 0.08f);  // 0.02 to 0.10 (higher space = easier to trigger)
+  float ratio = 3.0f + (spaceValue * 5.0f);        // 3:1 to 8:1 (more aggressive at high space)
+  float attack = 0.001f;   // Very fast attack (1ms) for immediate ducking
+  float release = 0.05f + (spaceValue * 0.15f);    // 50ms to 200ms (slower release at high space)
+
+  // Wet mix amount based on space
+  float wetMix = spaceValue * 0.7f;  // 0.0 to 0.7 (max 70% wet)
+
+  // Volume compensation: space=0 -> 1.0x, space=1 -> 1.5x (+3dB)
+  float volumeCompensation = 1.0f + (spaceValue * 0.5f);
+
+  // Process each sample
   for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-    // 1. Detect Envelope from Sidechain (Dry)
+    // Detect envelope from dry signal (sidechain)
     float inputLevel = 0.0f;
     if (totalNumInputChannels == 2) {
-      inputLevel = std::max(std::abs(sidechainBuffer.getSample(0, sample)),
-                            std::abs(sidechainBuffer.getSample(1, sample)));
+      inputLevel = std::max(std::abs(dryBuffer.getSample(0, sample)),
+                           std::abs(dryBuffer.getSample(1, sample)));
     } else {
-      inputLevel = std::abs(sidechainBuffer.getSample(0, sample));
+      inputLevel = std::abs(dryBuffer.getSample(0, sample));
     }
 
-    // Simple Envelope Follower (Attack/Release)
-    if (inputLevel > currentEnv)
+    // Envelope follower with attack/release
+    if (inputLevel > currentEnv) {
       currentEnv += attack * (inputLevel - currentEnv);
-    else
-      currentEnv += release * (inputLevel - currentEnv);
-
-    // 2. Calculate Gain Reduction
-    float gainReduction = 1.0f;
-    if (currentEnv > threshold) {
-      // Simple hard knee compression
-      float excess = currentEnv - threshold;
-      gainReduction = 1.0f - (excess / ratio);
-      if (gainReduction < 0.0f)
-        gainReduction = 0.0f;
-    }
-
-    // 3. Apply Gain Reduction to Reverb Output (Wet)
-    for (int channel = 0; channel < totalNumInputChannels; ++channel) {
-      float *data = buffer.getWritePointer(channel);
-      // Note: buffer currently contains the Reverb output (Wet + Dry mixed by
-      // Reverb class) Wait, juce::Reverb mixes dry/wet internally. If we want
-      // to duck ONLY the wet signal, we should have processed Reverb fully wet,
-      // then ducked it, then mixed with dry.
-      // But juce::Reverb doesn't easily allow separate wet/dry output unless we
-      // set dry=0.
-
-      // Let's adjust: Set Reverb params to 100% Wet, 0% Dry.
-      // Then we mix Dry back in manually.
-
-      // Actually, for "Ducking Reverb", usually the Reverb tail is ducked by
-      // the Dry signal. So:
-      // 1. Dry Signal -> Output
-      // 2. Dry Signal -> Reverb (100% Wet) -> Ducking (controlled by Dry) ->
-      // Output
-
-      // I need to refactor the Reverb params above to be 100% Wet.
-    }
-  }
-
-  // REFACTORING DSP LOOP FOR CORRECT DUCKING
-  // 1. Get Dry Signal
-  // 2. Process Reverb (Wet Only)
-  // 3. Calculate Ducking Gain
-  // 4. Apply Ducking to Wet
-  // 5. Mix Dry + Wet
-
-  // Reset Reverb Params for 100% Wet
-  params.wetLevel = 1.0f; // We control mix level later
-  params.dryLevel = 0.0f;
-  reverb.setParameters(params);
-
-  // Process Reverb on a separate buffer
-  juce::AudioBuffer<float> wetBuffer;
-  wetBuffer.makeCopyOf(buffer); // Copy Dry to Wet input
-
-  if (totalNumInputChannels == 2) {
-    reverb.processStereo(wetBuffer.getWritePointer(0),
-                         wetBuffer.getWritePointer(1),
-                         wetBuffer.getNumSamples());
-  } else {
-    reverb.processMono(wetBuffer.getWritePointer(0), wetBuffer.getNumSamples());
-  }
-
-  // Ducking & Mixing Loop
-  float mixLevel = spaceValue * 0.8f; // Max wet mix
-
-  for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-    // Envelope Detection (from Dry buffer)
-    float dryLevel = 0.0f;
-    if (totalNumInputChannels == 2) {
-      dryLevel = std::max(std::abs(buffer.getSample(0, sample)),
-                          std::abs(buffer.getSample(1, sample)));
     } else {
-      dryLevel = std::abs(buffer.getSample(0, sample));
+      currentEnv += release * (inputLevel - currentEnv);
     }
 
-    if (dryLevel > currentEnv)
-      currentEnv += attack * (dryLevel - currentEnv);
-    else
-      currentEnv += release * (dryLevel - currentEnv);
-
-    // Gain Reduction
-    float gain = 1.0f;
+    // Calculate ducking gain (how much to reduce reverb)
+    float duckingGain = 1.0f;
     if (currentEnv > threshold) {
-      gain = 1.0f - ((currentEnv - threshold) * (1.0f - (1.0f / ratio)));
-      if (gain < 0.0f)
-        gain = 0.0f;
+      // When playing: reduce reverb based on ratio
+      float excessdB = (currentEnv - threshold) / threshold;
+      duckingGain = 1.0f - (excessdB * (1.0f - (1.0f / ratio)));
+      duckingGain = juce::jmax(0.0f, juce::jmin(1.0f, duckingGain));
     }
 
-    // Apply to Wet and Mix
+    // Mix dry + ducked wet for each channel
     for (int channel = 0; channel < totalNumInputChannels; ++channel) {
-      float drySample = buffer.getSample(channel, sample);
-      float wetSample = wetBuffer.getSample(channel, sample);
+      float drySample = dryBuffer.getSample(channel, sample);
+      float wetSample = buffer.getSample(channel, sample);
 
-      float duckedWet = wetSample * gain * mixLevel;
+      // Apply ducking to wet signal
+      float duckedWet = wetSample * duckingGain * wetMix;
 
-      buffer.setSample(channel, sample, drySample + duckedWet);
+      // Mix dry + wet with volume compensation
+      float output = (drySample + duckedWet) * volumeCompensation;
+
+      buffer.setSample(channel, sample, output);
     }
   }
 }
