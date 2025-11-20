@@ -6,8 +6,7 @@ project(Duckaverb VERSION 0.0.1)
 include(FetchContent)
 FetchContent_Declare(
     juce
-    GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
-    GIT_TAG        7.0.12
+    URL https://github.com/juce-framework/JUCE/archive/refs/tags/7.0.12.zip
 )
 FetchContent_MakeAvailable(juce)
 
