@@ -1,0 +1,47 @@
+name: CMake Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Upload Artifacts (macOS)
+      if: runner.os == 'macOS'
+      uses: actions/upload-artifact@v3
+      with:
+        name: Duckaverb-macOS
+        path: |
+          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.vst3
+          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.component
+          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.app
+
+    - name: Upload Artifacts (Windows)
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v3
+      with:
+        name: Duckaverb-Windows
+        path: |
+          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.vst3
+          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.exe
