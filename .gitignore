@@ -1,0 +1,28 @@
+# Build directories
+build/
+cmake-build-*/
+
+# macOS
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Plugin binaries (already installed in system folders)
+*.vst3
+*.component
+*.app
+*.exe
+*.dll
+
+# CMake
+CMakeCache.txt
+CMakeFiles/

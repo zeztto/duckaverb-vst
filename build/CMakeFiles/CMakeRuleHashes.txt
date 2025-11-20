@@ -1,5 +1,0 @@
-# Hashes of file build rules.
-bb7771640b19825678d25795c09454ef Duckaverb_artefacts/JuceLibraryCode/Duckaverb_AU/PkgInfo
-d487156d089de2951a074075d832b90c Duckaverb_artefacts/JuceLibraryCode/Duckaverb_Standalone/PkgInfo
-fc1f43c564319947cfdf8068c007cace Duckaverb_artefacts/JuceLibraryCode/Duckaverb_VST3/PkgInfo
-b1efaae54d4a04b4a2cc96135bd8a3e9 Duckaverb_artefacts/JuceLibraryCode/JuceHeader.h

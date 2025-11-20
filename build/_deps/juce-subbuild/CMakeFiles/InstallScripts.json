@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/sungwoonchun/dev/duckaverb-vst/build/_deps/juce-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
