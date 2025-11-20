@@ -36,9 +36,9 @@ jobs:
       with:
         name: Duckaverb-macOS
         path: |
-          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.vst3
-          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.component
-          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.app
+          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/VST3/Duckaverb.vst3
+          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/AU/Duckaverb.component
+          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Standalone/Duckaverb.app
 
     - name: Upload Artifacts (Windows)
       if: runner.os == 'Windows'
@@ -46,5 +46,5 @@ jobs:
       with:
         name: Duckaverb-Windows
         path: |
-          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.vst3
-          ${{github.workspace}}/build/Source/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Duckaverb.exe
+          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/VST3/Duckaverb.vst3
+          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Standalone/Duckaverb.exe
