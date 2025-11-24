@@ -56,21 +56,46 @@ duckaverb-vst/
 
 Duckaverb의 핵심 오디오 처리는 다음 단계로 이루어집니다:
 
-1. **입력 레벨 감지**:
-   - RMS 레벨 계산으로 입력 신호의 강도 측정
-   - 기타 연주의 다이나믹 범위 추적
+1. **입력 레벨 감지** (Sample 162-170):
+   - Peak 레벨 감지: 각 샘플의 절대값 측정
+   - 스테레오의 경우 좌우 채널 중 큰 값 사용
+   - 기타 연주의 다이나믹 범위 실시간 추적
 
-2. **덕킹 엔벨로프 생성**:
-   - Attack/Release 파라미터로 부드러운 엔벨로프 생성
-   - 연주 중에는 리버브 레벨 감소, 연주 멈추면 증가
+2. **덕킹 엔벨로프 생성** (Sample 173-177):
+   - **Attack/Release 엔벨로프 팔로워**:
+     - Attack: 1ms (즉각적 반응) - 연주 시작 시 리버브 빠르게 억제
+     - Release: 50-200ms (Space 값에 비례) - 연주 멈춤 후 리버브 서서히 회복
+   - 부드러운 곡선으로 갑작스러운 변화 방지
 
-3. **리버브 처리**:
+3. **덕킹 게인 계산** (Sample 179-195):
+   ```cpp
+   float duckingGain = 1.0f;  // 기본: 100% 리버브
+   if (currentEnv > threshold) {
+     // Threshold 초과량 계산 (0.0 ~ 1.0)
+     float excessAmount = (currentEnv - threshold) / threshold;
+     excessAmount = juce::jmin(excessAmount, 1.0f);  // [중요] 1.0으로 제한
+
+     // Soft-knee 보간: 1.0 (full) → 1/ratio (reduced)
+     float minGain = 1.0f / ratio;  // ratio 3:1 → 0.33, 8:1 → 0.125
+     duckingGain = 1.0f - (excessAmount * (1.0f - minGain));
+
+     // 최소 1% 유지 (완전히 무음 방지)
+     duckingGain = juce::jmax(0.01f, duckingGain);
+   }
+   ```
+   - **연주 중**: 리버브 18-33%로 감소 (Space 값에 따라)
+   - **연주 멈춤**: 리버브 100%로 회복
+   - **Soft-knee**: Threshold 근처에서 부드럽게 전환
+
+4. **리버브 처리** (Sample 131-147):
    - JUCE의 `juce::Reverb` 사용
+   - 100% wet으로 처리 후 수동 믹싱
    - Room Size, Damping, Width 파라미터를 Space 노브로 통합 제어
 
-4. **믹싱**:
-   - 드라이 신호와 덕킹된 웨트 신호 믹싱
-   - Space 노브로 Dry/Wet 비율 제어
+5. **믹싱** (Sample 197-200):
+   - 드라이 신호 + 덕킹된 웨트 신호
+   - Space 노브로 Wet Level (0-70%) 제어
+   - Volume Compensation (1.0x-1.5x) 적용
 
 ### UI (PluginEditor.cpp)
 

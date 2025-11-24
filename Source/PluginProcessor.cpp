@@ -180,9 +180,18 @@ void DuckaverbAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     float duckingGain = 1.0f;
     if (currentEnv > threshold) {
       // When playing: reduce reverb based on ratio
-      float excessdB = (currentEnv - threshold) / threshold;
-      duckingGain = 1.0f - (excessdB * (1.0f - (1.0f / ratio)));
-      duckingGain = juce::jmax(0.0f, juce::jmin(1.0f, duckingGain));
+      // Calculate how much we exceed threshold (0.0 to 1.0+)
+      float excessAmount = (currentEnv - threshold) / threshold;
+      // CRITICAL FIX: Clamp to 1.0 to prevent over-reduction
+      excessAmount = juce::jmin(excessAmount, 1.0f);
+
+      // Interpolate between full reverb (1.0) and reduced reverb (1/ratio)
+      // ratio=3 -> min gain=0.33, ratio=8 -> min gain=0.125
+      float minGain = 1.0f / ratio;
+      duckingGain = 1.0f - (excessAmount * (1.0f - minGain));
+
+      // Safety clamp: prevent complete silence, keep at least 1% for naturalness
+      duckingGain = juce::jmax(0.01f, juce::jmin(1.0f, duckingGain));
     }
 
     // Mix dry + ducked wet for each channel

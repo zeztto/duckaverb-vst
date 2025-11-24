@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(Duckaverb VERSION 0.0.1)
+project(Duckaverb VERSION 0.0.2)
 
 # Set policy for URL download timestamps
 if(POLICY CMP0135)
