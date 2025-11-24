@@ -26,19 +26,19 @@ jobs:
       run: cmake --build build --config Release
 
     - name: Upload AU
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-macOS-AU
         path: build/Duckaverb_artefacts/Release/AU/Duckaverb.component
 
     - name: Upload VST3
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-macOS-VST3
         path: build/Duckaverb_artefacts/Release/VST3/Duckaverb.vst3
 
     - name: Upload Standalone
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-macOS-Standalone
         path: build/Duckaverb_artefacts/Release/Standalone/Duckaverb.app
@@ -57,13 +57,13 @@ jobs:
       run: cmake --build build --config Release
 
     - name: Upload VST3
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-Windows-VST3
         path: build/Duckaverb_artefacts/Release/VST3/Duckaverb.vst3
 
     - name: Upload Standalone
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-Windows-Standalone
         path: build/Duckaverb_artefacts/Release/Standalone/Duckaverb.exe
@@ -98,13 +98,13 @@ jobs:
       run: cmake --build build --config Release
 
     - name: Upload VST3
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-Linux-VST3
         path: build/Duckaverb_artefacts/Release/VST3/Duckaverb.vst3
 
     - name: Upload Standalone
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Duckaverb-Linux-Standalone
         path: build/Duckaverb_artefacts/Release/Standalone/Duckaverb
