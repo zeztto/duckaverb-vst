@@ -30,6 +30,8 @@ juce_add_plugin(Duckaverb
     FORMATS AU VST3 Standalone
     PRODUCT_NAME "Duckaverb"
     BUNDLE_ID "com.h4ppylabs.duckaverb"
+    ICON_BIG "${CMAKE_CURRENT_SOURCE_DIR}/icon.png"
+    ICON_SMALL "${CMAKE_CURRENT_SOURCE_DIR}/icon.png"
 )
 
 target_sources(Duckaverb
