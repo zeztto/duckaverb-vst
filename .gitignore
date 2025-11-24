@@ -26,3 +26,7 @@ cmake-build-*/
 # CMake
 CMakeCache.txt
 CMakeFiles/
+
+# Release packages
+releases/
+*.zip

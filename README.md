@@ -89,6 +89,7 @@ h4ppy Labs의 두 번째 제품으로, 연주 중에는 명료함을 유지하�
 
 -   [개발 가이드](DOCS/DEVELOPMENT.md)
 -   [UI 디자인 가이드](DOCS/UI_DESIGN.md)
+-   [Windows 설치 가이드](DOCS/WINDOWS_INSTALL.md)
 -   [변경 로그](CHANGELOG.md)
 
 ## 라이선스
@@ -103,4 +104,4 @@ h4ppy Labs의 두 번째 제품으로, 연주 중에는 명료함을 유지하�
 
 ---
 
-© 2024 h4ppy Labs. All rights reserved.
+© 2025 h4ppy Labs. All rights reserved.
