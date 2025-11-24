@@ -22,7 +22,7 @@ h4ppy Labs의 두 번째 제품으로, 연주 중에는 명료함을 유지하�
     -   명확한 BYPASS 풋스위치
     -   다크 테마와 오렌지 악센트
 -   **Custom Icon**: 오리와 오디오 파형이 결합된 독특한 앱 아이콘
--   **Multi-Platform**: macOS (VST3, AU, Standalone), Windows (VST3, Standalone), Linux (VST3, Standalone) 지원
+-   **Multi-Platform**: macOS (VST3, AU, Standalone), Windows (VST3, Standalone) 지원
 -   **CI/CD**: GitHub Actions를 통한 자동 빌드
 
 ## 설치 및 빌드 방법
@@ -57,13 +57,6 @@ h4ppy Labs의 두 번째 제품으로, 연주 중에는 명료함을 유지하�
         cmake -B build -G "Visual Studio 17 2022" -A x64
         cmake --build build --config Release
         ```
-    -   **Linux**:
-        ```bash
-        sudo apt-get install libasound2-dev libcurl4-openssl-dev libfreetype6-dev \
-                             libx11-dev libxcomposite-dev libxcursor-dev libxinerama-dev \
-                             libxrandr-dev libxrender-dev webkit2gtk-4.0-dev
-        cmake --build build --config Release
-        ```
 
 4.  **설치 확인**:
     -   빌드된 플러그인은 `build/Duckaverb_artefacts/Release/` 또는 시스템 플러그인 폴더에 위치합니다
@@ -74,9 +67,6 @@ h4ppy Labs의 두 번째 제품으로, 연주 중에는 명료함을 유지하�
     -   **Windows**:
         -   VST3: `C:\Program Files\Common Files\VST3\Duckaverb.vst3`
         -   Standalone: `build\Duckaverb_artefacts\Release\Standalone\Duckaverb.exe`
-    -   **Linux**:
-        -   VST3: `~/.vst3/Duckaverb.vst3`
-        -   Standalone: `build/Duckaverb_artefacts/Release/Standalone/Duckaverb`
 
 ## 기술 스택
 
