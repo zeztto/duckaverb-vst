@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-DuckaverbAudioProcessor::DuckaverbAudioProcessor()
+DUCKAVERBAudioProcessor::DUCKAVERBAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(
           BusesProperties()
@@ -11,10 +11,10 @@ DuckaverbAudioProcessor::DuckaverbAudioProcessor()
       apvts(*this, nullptr, "Parameters", createParameterLayout()) {
 }
 
-DuckaverbAudioProcessor::~DuckaverbAudioProcessor() {}
+DUCKAVERBAudioProcessor::~DUCKAVERBAudioProcessor() {}
 
 juce::AudioProcessorValueTreeState::ParameterLayout
-DuckaverbAudioProcessor::createParameterLayout() {
+DUCKAVERBAudioProcessor::createParameterLayout() {
   juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
   layout.add(std::make_unique<juce::AudioParameterFloat>("space", "Space", 0.0f,
@@ -25,11 +25,11 @@ DuckaverbAudioProcessor::createParameterLayout() {
   return layout;
 }
 
-const juce::String DuckaverbAudioProcessor::getName() const {
+const juce::String DUCKAVERBAudioProcessor::getName() const {
   return JucePlugin_Name;
 }
 
-bool DuckaverbAudioProcessor::acceptsMidi() const {
+bool DUCKAVERBAudioProcessor::acceptsMidi() const {
 #if JucePlugin_WantsMidiInput
   return true;
 #else
@@ -37,7 +37,7 @@ bool DuckaverbAudioProcessor::acceptsMidi() const {
 #endif
 }
 
-bool DuckaverbAudioProcessor::producesMidi() const {
+bool DUCKAVERBAudioProcessor::producesMidi() const {
 #if JucePlugin_ProducesMidiOutput
   return true;
 #else
@@ -45,7 +45,7 @@ bool DuckaverbAudioProcessor::producesMidi() const {
 #endif
 }
 
-bool DuckaverbAudioProcessor::isMidiEffect() const {
+bool DUCKAVERBAudioProcessor::isMidiEffect() const {
 #if JucePlugin_IsMidiEffect
   return true;
 #else
@@ -53,35 +53,35 @@ bool DuckaverbAudioProcessor::isMidiEffect() const {
 #endif
 }
 
-double DuckaverbAudioProcessor::getTailLengthSeconds() const { return 0.0; }
+double DUCKAVERBAudioProcessor::getTailLengthSeconds() const { return 0.0; }
 
-int DuckaverbAudioProcessor::getNumPrograms() {
+int DUCKAVERBAudioProcessor::getNumPrograms() {
   return 1; // NB: some hosts don't cope very well if you tell them there are 0
             // programs, so this should be at least 1, even if you're not really
             // implementing programs.
 }
 
-int DuckaverbAudioProcessor::getCurrentProgram() { return 0; }
+int DUCKAVERBAudioProcessor::getCurrentProgram() { return 0; }
 
-void DuckaverbAudioProcessor::setCurrentProgram(int index) {}
+void DUCKAVERBAudioProcessor::setCurrentProgram(int index) {}
 
-const juce::String DuckaverbAudioProcessor::getProgramName(int index) {
+const juce::String DUCKAVERBAudioProcessor::getProgramName(int index) {
   return {};
 }
 
-void DuckaverbAudioProcessor::changeProgramName(int index,
+void DUCKAVERBAudioProcessor::changeProgramName(int index,
                                                 const juce::String &newName) {}
 
-void DuckaverbAudioProcessor::prepareToPlay(double sampleRate,
+void DUCKAVERBAudioProcessor::prepareToPlay(double sampleRate,
                                             int samplesPerBlock) {
   reverb.setSampleRate(sampleRate);
   currentEnv = 0.0f;
 }
 
-void DuckaverbAudioProcessor::releaseResources() {}
+void DUCKAVERBAudioProcessor::releaseResources() {}
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool DuckaverbAudioProcessor::isBusesLayoutSupported(
+bool DUCKAVERBAudioProcessor::isBusesLayoutSupported(
     const BusesLayout &layouts) const {
 #if JucePlugin_IsMidiEffect
   juce::ignoreUnused(layouts);
@@ -102,7 +102,7 @@ bool DuckaverbAudioProcessor::isBusesLayoutSupported(
 }
 #endif
 
-void DuckaverbAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
+void DUCKAVERBAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
                                            juce::MidiBuffer &midiMessages) {
   juce::ScopedNoDenormals noDenormals;
   auto totalNumInputChannels = getTotalNumInputChannels();
@@ -210,21 +210,21 @@ void DuckaverbAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
   }
 }
 
-bool DuckaverbAudioProcessor::hasEditor() const {
+bool DUCKAVERBAudioProcessor::hasEditor() const {
   return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor *DuckaverbAudioProcessor::createEditor() {
-  return new DuckaverbAudioProcessorEditor(*this);
+juce::AudioProcessorEditor *DUCKAVERBAudioProcessor::createEditor() {
+  return new DUCKAVERBAudioProcessorEditor(*this);
 }
 
-void DuckaverbAudioProcessor::getStateInformation(juce::MemoryBlock &destData) {
+void DUCKAVERBAudioProcessor::getStateInformation(juce::MemoryBlock &destData) {
   auto state = apvts.copyState();
   std::unique_ptr<juce::XmlElement> xml(state.createXml());
   copyXmlToBinary(*xml, destData);
 }
 
-void DuckaverbAudioProcessor::setStateInformation(const void *data,
+void DUCKAVERBAudioProcessor::setStateInformation(const void *data,
                                                   int sizeInBytes) {
   std::unique_ptr<juce::XmlElement> xmlState(
       getXmlFromBinary(data, sizeInBytes));
@@ -236,5 +236,5 @@ void DuckaverbAudioProcessor::setStateInformation(const void *data,
 
 // This creates new instances of the plugin..
 juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter() {
-  return new DuckaverbAudioProcessor();
+  return new DUCKAVERBAudioProcessor();
 }

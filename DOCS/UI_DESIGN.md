@@ -1,8 +1,8 @@
-# Duckaverb UI Design Guide
+# DUCKAVERB UI Design Guide
 
 ## 디자인 철학
 
-Duckaverb의 UI는 **기타 페달**에서 영감을 받아, 단순하면서도 직관적인 사용자 경험을 제공합니다.
+DUCKAVERB의 UI는 **기타 페달**에서 영감을 받아, 단순하면서도 직관적인 사용자 경험을 제공합니다.
 
 ### 핵심 원칙
 
@@ -170,7 +170,7 @@ g.drawFittedText("Ducking Reverb", ...);
 
 ## FUZZA VST와의 일관성
 
-Duckaverb는 FUZZA VST의 디자인 언어를 계승합니다:
+DUCKAVERB는 FUZZA VST의 디자인 언어를 계승합니다:
 
 ### 공통 요소
 
@@ -183,7 +183,7 @@ Duckaverb는 FUZZA VST의 디자인 언어를 계승합니다:
 
 ### 차이점
 
-| 요소 | FUZZA | Duckaverb |
+| 요소 | FUZZA | DUCKAVERB |
 |------|-------|-----------|
 | 노브 수 | 3개 | 1개 |
 | 버튼 수 | 6개 (토글) | 1개 (BYPASS) |
@@ -226,4 +226,4 @@ Duckaverb는 FUZZA VST의 디자인 언어를 계승합니다:
 
 ---
 
-이 디자인 가이드는 Duckaverb의 UI 일관성을 유지하고, 향후 업데이트 시 참고 자료로 사용됩니다.
+이 디자인 가이드는 DUCKAVERB의 UI 일관성을 유지하고, 향후 업데이트 시 참고 자료로 사용됩니다.

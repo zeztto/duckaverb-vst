@@ -1,8 +1,8 @@
 #include "PluginEditor.h"
 #include "PluginProcessor.h"
 
-DuckaverbAudioProcessorEditor::DuckaverbAudioProcessorEditor(
-    DuckaverbAudioProcessor &p)
+DUCKAVERBAudioProcessorEditor::DUCKAVERBAudioProcessorEditor(
+    DUCKAVERBAudioProcessor &p)
     : AudioProcessorEditor(&p), audioProcessor(p) {
 
   // === SPACE KNOB (Single large rotary control) ===
@@ -48,9 +48,9 @@ DuckaverbAudioProcessorEditor::DuckaverbAudioProcessorEditor(
   setSize(380, 440);
 }
 
-DuckaverbAudioProcessorEditor::~DuckaverbAudioProcessorEditor() {}
+DUCKAVERBAudioProcessorEditor::~DUCKAVERBAudioProcessorEditor() {}
 
-void DuckaverbAudioProcessorEditor::paint(juce::Graphics &g) {
+void DUCKAVERBAudioProcessorEditor::paint(juce::Graphics &g) {
   // Pedal enclosure background (dark grey with subtle gradient)
   auto bounds = getLocalBounds();
   juce::ColourGradient gradient(
@@ -132,7 +132,7 @@ void DuckaverbAudioProcessorEditor::paint(juce::Graphics &g) {
   g.drawFittedText("h4ppy Labs", footerArea, juce::Justification::centred, 1);
 }
 
-void DuckaverbAudioProcessorEditor::resized() {
+void DUCKAVERBAudioProcessorEditor::resized() {
   auto bounds = getLocalBounds().reduced(28);
 
   // Top: Logo area

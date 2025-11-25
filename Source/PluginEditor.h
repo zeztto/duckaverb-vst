@@ -3,16 +3,16 @@
 #include "PluginProcessor.h"
 #include <JuceHeader.h>
 
-class DuckaverbAudioProcessorEditor : public juce::AudioProcessorEditor {
+class DUCKAVERBAudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
-  DuckaverbAudioProcessorEditor(DuckaverbAudioProcessor &);
-  ~DuckaverbAudioProcessorEditor() override;
+  DUCKAVERBAudioProcessorEditor(DUCKAVERBAudioProcessor &);
+  ~DUCKAVERBAudioProcessorEditor() override;
 
   void paint(juce::Graphics &) override;
   void resized() override;
 
 private:
-  DuckaverbAudioProcessor &audioProcessor;
+  DUCKAVERBAudioProcessor &audioProcessor;
 
   // Main control
   juce::Slider spaceSlider;
@@ -27,5 +27,5 @@ private:
   std::unique_ptr<SliderAttachment> spaceAttachment;
   std::unique_ptr<ButtonAttachment> bypassAttachment;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DuckaverbAudioProcessorEditor)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DUCKAVERBAudioProcessorEditor)
 };

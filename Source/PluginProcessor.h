@@ -2,11 +2,11 @@
 
 #include <JuceHeader.h>
 
-class DuckaverbAudioProcessor  : public juce::AudioProcessor
+class DUCKAVERBAudioProcessor  : public juce::AudioProcessor
 {
 public:
-    DuckaverbAudioProcessor();
-    ~DuckaverbAudioProcessor() override;
+    DUCKAVERBAudioProcessor();
+    ~DUCKAVERBAudioProcessor() override;
 
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -48,5 +48,5 @@ private:
     // Ducking Logic
     float currentEnv = 0.0f;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DuckaverbAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DUCKAVERBAudioProcessor)
 };

@@ -34,17 +34,17 @@ jobs:
       if: runner.os == 'macOS'
       uses: actions/upload-artifact@v4
       with:
-        name: Duckaverb-macOS
+        name: DUCKAVERB-macOS
         path: |
-          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/VST3/Duckaverb.vst3
-          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/AU/Duckaverb.component
-          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Standalone/Duckaverb.app
+          ${{github.workspace}}/build/DUCKAVERB_artefacts/${{env.BUILD_TYPE}}/VST3/DUCKAVERB.vst3
+          ${{github.workspace}}/build/DUCKAVERB_artefacts/${{env.BUILD_TYPE}}/AU/DUCKAVERB.component
+          ${{github.workspace}}/build/DUCKAVERB_artefacts/${{env.BUILD_TYPE}}/Standalone/DUCKAVERB.app
 
     - name: Upload Artifacts (Windows)
       if: runner.os == 'Windows'
       uses: actions/upload-artifact@v4
       with:
-        name: Duckaverb-Windows
+        name: DUCKAVERB-Windows
         path: |
-          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/VST3/Duckaverb.vst3
-          ${{github.workspace}}/build/Duckaverb_artefacts/${{env.BUILD_TYPE}}/Standalone/Duckaverb.exe
+          ${{github.workspace}}/build/DUCKAVERB_artefacts/${{env.BUILD_TYPE}}/VST3/DUCKAVERB.vst3
+          ${{github.workspace}}/build/DUCKAVERB_artefacts/${{env.BUILD_TYPE}}/Standalone/DUCKAVERB.exe

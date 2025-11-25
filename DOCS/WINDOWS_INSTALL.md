@@ -1,4 +1,4 @@
-# Duckaverb - Windows Installation Guide
+# DUCKAVERB - Windows Installation Guide
 
 ## System Requirements
 
@@ -8,7 +8,7 @@
 
 ## Installation Options
 
-Duckaverb is available in two formats for Windows:
+DUCKAVERB is available in two formats for Windows:
 
 1. **VST3 Plugin** - For use in DAWs
 2. **Standalone App** - Standalone audio application
@@ -19,7 +19,7 @@ Duckaverb is available in two formats for Windows:
 
 ### Step 1: Download
 
-Download `Duckaverb-v0.0.1-Windows-VST3.zip` from the [GitHub Releases](https://github.com/zeztto/duckaverb-vst/releases) page.
+Download `DUCKAVERB-v0.0.1-Windows-VST3.zip` from the [GitHub Releases](https://github.com/zeztto/duckaverb-vst/releases) page.
 
 ### Step 2: Extract
 
@@ -29,7 +29,7 @@ Download `Duckaverb-v0.0.1-Windows-VST3.zip` from the [GitHub Releases](https://
 
 ### Step 3: Install
 
-Copy the extracted `Duckaverb.vst3` folder to one of these locations:
+Copy the extracted `DUCKAVERB.vst3` folder to one of these locations:
 
 **Recommended (System-wide)**:
 ```
@@ -50,7 +50,7 @@ C:\Users\YourUsername\AppData\Local\Programs\Common\VST3\
    - **FL Studio**: Channels > Add > Refresh > Fast scan
    - **Cubase**: Studio > VST Plug-in Manager > Update Plug-in Information
 
-3. Look for **Duckaverb** by **h4ppy Labs** in your plugin list
+3. Look for **DUCKAVERB** by **h4ppy Labs** in your plugin list
 
 ---
 
@@ -58,28 +58,28 @@ C:\Users\YourUsername\AppData\Local\Programs\Common\VST3\
 
 ### Step 1: Download
 
-Download `Duckaverb-v0.0.1-Windows-Standalone.zip` from the [GitHub Releases](https://github.com/zeztto/duckaverb-vst/releases) page.
+Download `DUCKAVERB-v0.0.1-Windows-Standalone.zip` from the [GitHub Releases](https://github.com/zeztto/duckaverb-vst/releases) page.
 
 ### Step 2: Extract
 
 1. Right-click the downloaded `.zip` file
 2. Select **Extract All...**
-3. Choose your installation location (e.g., `C:\Program Files\Duckaverb\`)
+3. Choose your installation location (e.g., `C:\Program Files\DUCKAVERB\`)
 
 ### Step 3: Run
 
 1. Navigate to the extraction folder
-2. Double-click `Duckaverb.exe` to launch
+2. Double-click `DUCKAVERB.exe` to launch
 
 **Optional**: Create a desktop shortcut:
-- Right-click `Duckaverb.exe`
+- Right-click `DUCKAVERB.exe`
 - Select **Send to > Desktop (create shortcut)**
 
 ---
 
 ## Audio Configuration (Standalone)
 
-When running Duckaverb as a standalone app:
+When running DUCKAVERB as a standalone app:
 
 1. Click **Options** (or **File > Audio Settings**)
 2. Configure:
@@ -95,7 +95,7 @@ When running Duckaverb as a standalone app:
 
 ### Plugin Not Showing in DAW
 
-1. **Verify Installation Path**: Ensure `Duckaverb.vst3` is in the correct VST3 folder
+1. **Verify Installation Path**: Ensure `DUCKAVERB.vst3` is in the correct VST3 folder
 2. **Check DAW VST3 Scan Path**: Make sure your DAW is scanning the VST3 folder
 3. **Run as Administrator**: Try installing with administrator privileges
 4. **Rescan Plugins**: Force a full plugin rescan in your DAW
@@ -116,7 +116,7 @@ This warning appears because the plugin is not digitally signed with a commercia
    - Install and restart
 
 2. **Check Antivirus**: Some antivirus software may block unsigned executables
-   - Add `Duckaverb.exe` to your antivirus exceptions
+   - Add `DUCKAVERB.exe` to your antivirus exceptions
 
 ### No Audio in Standalone
 
@@ -154,14 +154,14 @@ This warning appears because the plugin is not digitally signed with a commercia
 
 Delete the plugin folder:
 ```
-C:\Program Files\Common Files\VST3\Duckaverb.vst3
+C:\Program Files\Common Files\VST3\DUCKAVERB.vst3
 ```
 
 Then rescan plugins in your DAW.
 
 ### Standalone App
 
-Simply delete the extracted folder containing `Duckaverb.exe`.
+Simply delete the extracted folder containing `DUCKAVERB.exe`.
 
 ---
 

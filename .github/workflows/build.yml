@@ -1,4 +1,4 @@
-name: Build Duckaverb
+name: Build DUCKAVERB
 
 on:
   push:
@@ -28,20 +28,20 @@ jobs:
     - name: Upload AU
       uses: actions/upload-artifact@v4
       with:
-        name: Duckaverb-macOS-AU
-        path: build/Duckaverb_artefacts/Release/AU/Duckaverb.component
+        name: DUCKAVERB-macOS-AU
+        path: build/DUCKAVERB_artefacts/Release/AU/DUCKAVERB.component
 
     - name: Upload VST3
       uses: actions/upload-artifact@v4
       with:
-        name: Duckaverb-macOS-VST3
-        path: build/Duckaverb_artefacts/Release/VST3/Duckaverb.vst3
+        name: DUCKAVERB-macOS-VST3
+        path: build/DUCKAVERB_artefacts/Release/VST3/DUCKAVERB.vst3
 
     - name: Upload Standalone
       uses: actions/upload-artifact@v4
       with:
-        name: Duckaverb-macOS-Standalone
-        path: build/Duckaverb_artefacts/Release/Standalone/Duckaverb.app
+        name: DUCKAVERB-macOS-Standalone
+        path: build/DUCKAVERB_artefacts/Release/Standalone/DUCKAVERB.app
 
   build-windows:
     name: Build Windows
@@ -59,11 +59,11 @@ jobs:
     - name: Upload VST3
       uses: actions/upload-artifact@v4
       with:
-        name: Duckaverb-Windows-VST3
-        path: build/Duckaverb_artefacts/Release/VST3/Duckaverb.vst3
+        name: DUCKAVERB-Windows-VST3
+        path: build/DUCKAVERB_artefacts/Release/VST3/DUCKAVERB.vst3
 
     - name: Upload Standalone
       uses: actions/upload-artifact@v4
       with:
-        name: Duckaverb-Windows-Standalone
-        path: build/Duckaverb_artefacts/Release/Standalone/Duckaverb.exe
+        name: DUCKAVERB-Windows-Standalone
+        path: build/DUCKAVERB_artefacts/Release/Standalone/DUCKAVERB.exe

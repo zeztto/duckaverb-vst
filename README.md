@@ -1,12 +1,12 @@
-# Duckaverb VST
+# DUCKAVERB VST
 
 [![Build Status](https://github.com/zeztto/duckaverb-vst/actions/workflows/build.yml/badge.svg)](https://github.com/zeztto/duckaverb-vst/actions)
 
 <p align="center">
-  <img src="icon.png" alt="Duckaverb Icon" width="200"/>
+  <img src="icon.png" alt="DUCKAVERB Icon" width="200"/>
 </p>
 
-**Duckaverb**는 일렉트릭 기타를 위해 설계된 **원노브(One-Knob) 덕킹 리버브** VST 플러그인입니다.
+**DUCKAVERB**는 일렉트릭 기타를 위해 설계된 **원노브(One-Knob) 덕킹 리버브** VST 플러그인입니다.
 
 h4ppy Labs의 두 번째 제품으로, 연주 중에는 명료함을 유지하고 연주가 멈추면 풍부한 공간감을 제공하는 "덕킹(Ducking)" 효과를 하나의 노브로 간편하게 제어할 수 있습니다.
 
@@ -59,14 +59,14 @@ h4ppy Labs의 두 번째 제품으로, 연주 중에는 명료함을 유지하�
         ```
 
 4.  **설치 확인**:
-    -   빌드된 플러그인은 `build/Duckaverb_artefacts/Release/` 또는 시스템 플러그인 폴더에 위치합니다
+    -   빌드된 플러그인은 `build/DUCKAVERB_artefacts/Release/` 또는 시스템 플러그인 폴더에 위치합니다
     -   **macOS**:
-        -   AU: `~/Library/Audio/Plug-Ins/Components/Duckaverb.component`
-        -   VST3: `~/Library/Audio/Plug-Ins/VST3/Duckaverb.vst3`
-        -   Standalone: `build/Duckaverb_artefacts/Release/Standalone/Duckaverb.app`
+        -   AU: `~/Library/Audio/Plug-Ins/Components/DUCKAVERB.component`
+        -   VST3: `~/Library/Audio/Plug-Ins/VST3/DUCKAVERB.vst3`
+        -   Standalone: `build/DUCKAVERB_artefacts/Release/Standalone/DUCKAVERB.app`
     -   **Windows**:
-        -   VST3: `C:\Program Files\Common Files\VST3\Duckaverb.vst3`
-        -   Standalone: `build\Duckaverb_artefacts\Release\Standalone\Duckaverb.exe`
+        -   VST3: `C:\Program Files\Common Files\VST3\DUCKAVERB.vst3`
+        -   Standalone: `build\DUCKAVERB_artefacts\Release\Standalone\DUCKAVERB.exe`
 
 ## 기술 스택
 

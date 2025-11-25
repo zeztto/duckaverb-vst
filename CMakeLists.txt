@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(Duckaverb VERSION 0.0.2)
+project(DUCKAVERB VERSION 0.0.2)
 
 # Set policy for URL download timestamps
 if(POLICY CMP0135)
@@ -17,7 +17,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(juce)
 
 # Standard JUCE Plugin Setup
-juce_add_plugin(Duckaverb
+juce_add_plugin(DUCKAVERB
     COMPANY_NAME "h4ppy Labs"
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
@@ -28,13 +28,13 @@ juce_add_plugin(Duckaverb
     PLUGIN_MANUFACTURER_CODE H4py
     PLUGIN_CODE Duck
     FORMATS AU VST3 Standalone
-    PRODUCT_NAME "Duckaverb"
+    PRODUCT_NAME "DUCKAVERB"
     BUNDLE_ID "com.h4ppylabs.duckaverb"
     ICON_BIG "${CMAKE_CURRENT_SOURCE_DIR}/icon.png"
     ICON_SMALL "${CMAKE_CURRENT_SOURCE_DIR}/icon.png"
 )
 
-target_sources(Duckaverb
+target_sources(DUCKAVERB
     PRIVATE
         Source/PluginProcessor.cpp
         Source/PluginProcessor.h
@@ -42,13 +42,13 @@ target_sources(Duckaverb
         Source/PluginEditor.h
 )
 
-target_compile_features(Duckaverb PUBLIC cxx_std_17)
+target_compile_features(DUCKAVERB PUBLIC cxx_std_17)
 
-target_compile_definitions(Duckaverb PUBLIC
+target_compile_definitions(DUCKAVERB PUBLIC
     JUCE_VST3_CAN_REPLACE_VST2=0
 )
 
-target_link_libraries(Duckaverb
+target_link_libraries(DUCKAVERB
     PRIVATE
         juce::juce_audio_utils
     PUBLIC
@@ -57,4 +57,4 @@ target_link_libraries(Duckaverb
         juce::juce_recommended_warning_flags
 )
 
-juce_generate_juce_header(Duckaverb)
+juce_generate_juce_header(DUCKAVERB)

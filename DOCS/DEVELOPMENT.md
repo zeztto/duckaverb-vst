@@ -1,4 +1,4 @@
-# Duckaverb Development Guide
+# DUCKAVERB Development Guide
 
 ## 프로젝트 구조
 
@@ -54,7 +54,7 @@ duckaverb-vst/
 
 ### DSP 처리 (PluginProcessor.cpp)
 
-Duckaverb의 핵심 오디오 처리는 다음 단계로 이루어집니다:
+DUCKAVERB의 핵심 오디오 처리는 다음 단계로 이루어집니다:
 
 1. **입력 레벨 감지** (Sample 162-170):
    - Peak 레벨 감지: 각 샘플의 절대값 측정
@@ -135,7 +135,7 @@ Duckaverb의 핵심 오디오 처리는 다음 단계로 이루어집니다:
 ### CMakeLists.txt 주요 설정
 
 ```cmake
-juce_add_plugin(Duckaverb
+juce_add_plugin(DUCKAVERB
     COMPANY_NAME "h4ppy Labs"
     PLUGIN_MANUFACTURER_CODE H4py
     PLUGIN_CODE Duck
@@ -157,22 +157,22 @@ cmake --build build --config Release --clean-first
 
 1. **Xcode에서 열기**:
    ```bash
-   open build/Duckaverb.xcodeproj
+   open build/DUCKAVERB.xcodeproj
    ```
 
 2. **Standalone 앱 실행**:
    ```bash
-   build/Duckaverb_artefacts/Release/Standalone/Duckaverb.app/Contents/MacOS/Duckaverb
+   build/DUCKAVERB_artefacts/Release/Standalone/DUCKAVERB.app/Contents/MacOS/DUCKAVERB
    ```
 
 3. **로그 확인**:
    ```bash
-   log stream --predicate 'process == "Duckaverb"'
+   log stream --predicate 'process == "DUCKAVERB"'
    ```
 
 ### Windows
 
-1. Visual Studio에서 `build/Duckaverb.sln` 열기
+1. Visual Studio에서 `build/DUCKAVERB.sln` 열기
 2. Standalone 타겟 선택 후 F5로 디버깅
 
 ## 코드 스타일
@@ -201,7 +201,7 @@ cmake --build build --config Release --clean-first
 
 1. `CMakeLists.txt`에서 버전 번호 업데이트:
    ```cmake
-   project(Duckaverb VERSION 0.0.2)
+   project(DUCKAVERB VERSION 0.0.2)
    ```
 
 2. `CHANGELOG.md` 업데이트
@@ -222,7 +222,7 @@ cmake --build build --config Release
 
 ```bash
 codesign --force --sign "Developer ID Application: YourName" \
-  build/Duckaverb_artefacts/Release/AU/Duckaverb.component
+  build/DUCKAVERB_artefacts/Release/AU/DUCKAVERB.component
 ```
 
 ## 참고 자료
